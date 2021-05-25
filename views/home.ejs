@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous"></script>
+
+    <title>Home</title>
+    
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="/">CHAT APP</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="/">Home</a>
+        </li>
+        <% if (!loggedIn){ %>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Login / Register
+          </a>
+          <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <li><a class="dropdown-item" href="/login">Login</a></li>
+            <li><a class="dropdown-item" href="/register">Register</a></li>
+          </ul>
+        </li>
+         <% } %>
+        <% if (loggedIn){ %>
+          <li class="nav-item">
+            <form action="/logout" method="POST">
+              <button type="submit" class="btn btn-link text-dark text-decoration-none">Log Out</button>
+            </form>
+          </li>
+          <% } %>
+       
+      </ul>
+
+    </div>
+  </div>
+</nav>
+
+<div class="container">
+  <h4 class="text-center mb-4">welcome to the room <%=name%></h4>
+  <pre id="messages" style="height: 400px; overflow: scroll"></pre>
+
+    <% if (loggedIn){ %>
+    <form action="/saveMessage" method="post" id="sendMe">
+      <input
+      type="text"
+      id="messageBox"
+      placeholder="Type your message here"
+      style="display: block; width: 100%; margin-bottom: 10px; padding: 10px"
+      name = "message"
+    />
+    <input id="id" class="d-none" value="<%=id%>" name="user_id">
+    <button id="submitButtonId" class="submit d-none" type="submit"></button>
+  </form>
+  <button id="send" title="Send Message!" style="width: 100%; height: 30px">
+    Send Message
+  </button>
+  <p id='username' class='d-none'><%=name%></p>
+  
+  <% } %>
+</div>
+
+<script src="jquery.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qs/6.10.1/qs.js"></script>
+
+<script>
+
+  $(document).ready(() => {
+    console.log('ready');
+
+    // Load old messages
+    axios
+    .get('/loadMessages',{headers: {'Content-Type': 'application/json'}})
+    .then((response) => {
+      console.log(response.data);
+      for(var i = 0; i <response.data.length; i++){
+        $('#messages').append(`<p>${response.data[i].name} : ${response.data[i].message}</p>`)
+      }
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+    
+    const sendBtn = document.querySelector("#send");
+    const messages = document.querySelector("#messages");
+    const messageBox = document.querySelector("#messageBox");
+    
+    
+
+    const sender = $('#username').text()
+    const user_id = $('#id').text()
+    console.log('id :' + user_id );
+    let ws;
+    function showMessage(message) {
+      var name = $('#username').text()
+      $('#messages').append(`<p>${message}</p>`)
+      $('#messageBox').val('')
+//      messages.scrollTop = messages.scrollHeight;
+      
+}
+
+    function init() {
+      if (ws) {
+        ws.onerror = ws.onopen = ws.onclose = null;
+        ws.close();
+      }
+
+      ws = new WebSocket("ws://localhost:4040");
+      ws.onopen = () => {
+        console.log("Connection opened!");
+      };
+      ws.onmessage = ({ data }) => showMessage(data);
+      ws.onclose = function () {
+        ws = null;
+      };
+    }
+    
+    $("#submitButtonId").click(function() {
+
+    var url = "/saveMessage"; 
+
+    $.ajax({
+           type: "POST",
+           url: url,
+           data: $("#sendMe").serialize(),         
+         });
+    return false; 
+});
+
+    $('#send').click(function(){
+        $('#submitButtonId').click()
+        messages.scrollTop = messages.scrollHeight;
+      if (!ws) {
+        showMessage("No WebSocket connection :(");
+        return;
+      }
+      console.log($('#messageBox').val())
+      
+      var message = `${sender} : ${$('#messageBox').val()}`
+      ws.send(message);
+      showMessage(message);
+
+      
+    });
+    init();
+
+    $("#messageBox").keypress(function(event) {
+        if (event.keyCode === 13) {
+            $("#send").click();
+        }
+    });
+
+    $("form").bind("keypress", function (e) {
+      if (e.keyCode == 13) {
+        return false;
+    }
+});
+  });
+</script>
+  
+</body>
+</html>
