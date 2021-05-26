@@ -23,22 +23,24 @@
 
 </head>
 <body>
-   <nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">
   <div class="container-fluid mynavbar">
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-         <li class="myli">
-                <a id="mylink" class="navbar-brand"  href="/">Chat App</a>
+      <ul class="navbar-nav me-auto w-100">
+        <li class="nav-item">
+            <a class="navbar-brand"  href="/">
+              Chat App
+            </a>
         </li>
-        <li class="nav-item myli">
-          <a  id="mylink" class="nav-link active" aria-current="page" href="/">Home</a>
+        <li class="nav-item ml-auto">
+          <a  class="nav-link active" aria-current="page" href="/">Home</a>
         </li>
         
-        <li class="nav-item dropdown myli">
-          <a  id="mylink" class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
             Login / Register
           </a>
           <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
@@ -46,13 +48,7 @@
             <li><a class="dropdown-item" href="/register">Register</a></li>
           </ul>
         </li>
-        <% if (loggedIn){ %>
-              <li class="nav-item">
-                <form action="/logout" method="POST">
-                  <button style="color: white" type="submit" class="btn btn-link text-white text-decoration-none logoutsubmit">Log Out</button>
-                </form>
-              </li>
-              <% } %>
+        
        
       </ul>
 

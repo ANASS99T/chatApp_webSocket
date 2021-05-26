@@ -11,22 +11,25 @@
     
 </head>
 <body class="home">
-    <nav  class="navbar navbar-expand-lg navbar-light bg-light">
+ 
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
   <div class="container-fluid mynavbar">
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
+      <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-      	<li class="myli">
-                <a class="navbar-brand"  href="/">Chat App
-                </a>
+      <ul class="navbar-nav me-auto w-100">
+        <li class="nav-item">
+            <a class="navbar-brand"  href="/">
+              Chat App
+            </a>
         </li>
-        <li class="nav-item myli">
-          <a class="nav-link active" aria-current="page" href="/">Home</a>
+        <li class="nav-item ml-auto">
+          <a  class="nav-link active" aria-current="page" href="/">Home</a>
         </li>
-        <% if (!loggedIn){ %>
-        <li class="nav-item dropdown myli">
+        
+         <% if (!loggedIn){ %>
+         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
             Login / Register
           </a>
@@ -52,7 +55,7 @@
 
 <div class="container mycontainer">
   <h4 class="text-center mb-4 myh4">Welcome to the room <%=name%></h4>
-  <pre id="messages" style="height: 380px; overflow: scroll"></pre>
+  <pre id="messages" style="height: 380px; overflow: scroll" class="scrollbar-hidden"></pre>
 
     <% if (loggedIn){ %>
     <form action="/saveMessage" method="post" id="sendMe">
@@ -66,9 +69,11 @@
     <input id="id" class="d-none" value="<%=id%>" name="user_id">
     <button id="submitButtonId" class="submit d-none" type="submit"></button>
   </form>
-  <button style="vertical-align: center" class="homesubmit" id="send" title="Send Message!" style="width: 100%; height: 30px">
-    Send Message
-  </button>
+  <div class="w-100 d-flex align-items-center justify-content-center" >
+    <button style="vertical-align: center" class="homesubmit" id="send" title="Send Message!" style="width: 100%; height: 30px">
+      Send Message
+    </button>
+  </div>
   <p id='username' class='d-none'><%=name%></p>
   
   <% } %>
@@ -82,7 +87,7 @@
 
   $(document).ready(() => {
     console.log('ready');
-
+    
     // Load old messages
     axios
     .get('/loadMessages',{headers: {'Content-Type': 'application/json'}})

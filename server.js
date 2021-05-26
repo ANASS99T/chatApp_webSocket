@@ -14,7 +14,7 @@ const db = mysql.createConnection({
   user: process.env.db_user,
   password: process.env.db_password,
   database: process.env.db_db,
-  port: 3308
+  port: process.env.db_port,
 });
 
 db.connect((err) => {
@@ -206,10 +206,10 @@ app.get('/loadMessages', (req, res) => {
 });
 
 app.post('/saveMessage', (req, res) => {
-  console.dir('saving :'+ JSON.stringify(req.body))
+  console.dir('saving :' + JSON.stringify(req.body));
   var data = JSON.stringify(req.body);
   const NewMessage = JSON.parse(data);
-  console.log('newMessage :' + NewMessage.message);
+  // console.log('newMessage :' + NewMessage.message);
   db.query(
     'INSERT INTO messages SET ?',
     { message: NewMessage.message, user_id: NewMessage.user_id },
