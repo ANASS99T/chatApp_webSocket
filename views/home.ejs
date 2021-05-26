@@ -6,24 +6,27 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous"></script>
-
+    <link rel="stylesheet" href="style.css">
     <title>Home</title>
     
 </head>
-<body>
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-  <div class="container-fluid">
-    <a class="navbar-brand" href="/">CHAT APP</a>
+<body class="home">
+    <nav  class="navbar navbar-expand-lg navbar-light bg-light">
+  <div class="container-fluid mynavbar">
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
+    <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-        <li class="nav-item">
+      	<li class="myli">
+                <a class="navbar-brand"  href="/">Chat App
+                </a>
+        </li>
+        <li class="nav-item myli">
           <a class="nav-link active" aria-current="page" href="/">Home</a>
         </li>
         <% if (!loggedIn){ %>
-        <li class="nav-item dropdown">
+        <li class="nav-item dropdown myli">
           <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
             Login / Register
           </a>
@@ -36,7 +39,7 @@
         <% if (loggedIn){ %>
           <li class="nav-item">
             <form action="/logout" method="POST">
-              <button type="submit" class="btn btn-link text-dark text-decoration-none">Log Out</button>
+              <button style="color: white" type="submit" class="btn btn-link text-dark text-decoration-none logoutsubmit">Log Out</button>
             </form>
           </li>
           <% } %>
@@ -47,14 +50,14 @@
   </div>
 </nav>
 
-<div class="container">
-  <h4 class="text-center mb-4">welcome to the room <%=name%></h4>
-  <pre id="messages" style="height: 400px; overflow: scroll"></pre>
+<div class="container mycontainer">
+  <h4 class="text-center mb-4 myh4">Welcome to the room <%=name%></h4>
+  <pre id="messages" style="height: 380px; overflow: scroll"></pre>
 
     <% if (loggedIn){ %>
     <form action="/saveMessage" method="post" id="sendMe">
       <input
-      type="text"
+      type="text" class="homeloginput"
       id="messageBox"
       placeholder="Type your message here"
       style="display: block; width: 100%; margin-bottom: 10px; padding: 10px"
@@ -63,7 +66,7 @@
     <input id="id" class="d-none" value="<%=id%>" name="user_id">
     <button id="submitButtonId" class="submit d-none" type="submit"></button>
   </form>
-  <button id="send" title="Send Message!" style="width: 100%; height: 30px">
+  <button style="vertical-align: center" class="homesubmit" id="send" title="Send Message!" style="width: 100%; height: 30px">
     Send Message
   </button>
   <p id='username' class='d-none'><%=name%></p>

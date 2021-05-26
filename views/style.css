@@ -1,0 +1,108 @@
+body{
+	background:white;
+	background-attachment:fixed;
+}
+
+
+h3.logh3{
+	width:38%;
+	margin:0 auto;
+	padding-bottom:10px;
+}
+.logcontainer{
+    width:600px;
+	margin-left:200px;
+    margin-top:80px;
+	z-index:999;
+}
+.registercontainer{
+	width:600px;
+	margin-left:200px;
+    margin-top:20px;
+}
+.logform,.registerform{
+	width:600px;
+	margin-bottom:150px;
+	margin-left: 0;
+	padding:40px;
+	border: 1px solid #f1f1f1;
+	background: #fff;
+	box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
+}
+.registerform{
+	padding:30px;
+}
+.loginput,.homeloginput{
+    width: 100%;
+    padding: 12px 20px;
+    margin: 5px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+}
+.logsubmit, .homesubmit{
+    background-color: #53af57;
+    padding: 10px 20px;
+    margin: 2px 0;
+    border: none;
+    cursor: pointer;
+    width: 100%;
+}
+.logsubmit:hover,.homesubmit:hover{
+    background-color: white;
+    color: #53af57;
+    border: 1px solid #53af57;
+}
+.mynavbar{
+	//background-color:#;
+}
+ul{
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+ // background-color: #333;
+}
+li a {
+  display: block;
+  color:white;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration:none;
+}
+/*#mylink{
+	color:white;
+}*/
+ a:hover,.logoutsubmit:hover{
+  background-color: green;
+}
+a:active{
+  background-color: blue;
+}
+.logoutsubmit{
+	color:white;
+}
+.myli {
+color:white;
+  float: left;
+  border-right:1px solid #bbb;
+}
+.logoutsubmit:active{
+    background-color: blue;
+}
+.mycontainer{
+	background-color:white;
+	border:1px solid black;
+	margin-top:5px;
+}
+.homesubmit{
+	margin-bottom:10px;
+	vertical-align: center;
+}
+.homeloginput{
+	border:1px solid gray;
+}
+.homesubmit:hover{
+	color:red;
+	background-color: #53af57;
+}
+
